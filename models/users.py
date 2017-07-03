@@ -19,12 +19,13 @@ class User(db.Model):
     username = db.Column(db.String(80), nullable=True)
     password_hash = db.Column(db.String(80), nullable=True)
 
-    def __init__(self, email, name=None, picture=None, username=None):
+    def __init__(self, email, name=None, picture=None, username=None, google_id=None):
         """ user constructor. All parameters are mandatory """
         self.name = name
         self.email = email
         self.picture = picture
         self.username = username
+        self.google_id = google_id
 
     def __repr__(self):
         """ assigns the user object a name of a restaurant """

@@ -81,7 +81,10 @@ def google_login():
             name = login_session.get('user_name')
             email = login_session.get('email')
             picture = login_session.get('picture')
-            user = User(user_id=user_id, name=name, email=email, picture=picture)
+            user = User(google_id=user_id,
+                        name=name,
+                        email=email,
+                        picture=picture)
             db.session.add(user)
             db.session.commit()
 
