@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+
+{% block nav %}
+    {% include 'heading.html' %}
+{% endblock %}
+
+{% block content %}
+    {% for restaurant in restaurants %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>{{ restaurant.name }}</h3>
+            </div>
+            <div class="panel-body">
+                <a class="btn btn-primary" href={{ url_for("restaurant.show_menu", restaurant_id=restaurant.id) }}>Menu</a>
+                <a class="btn btn-success" href={{ url_for("restaurant.update", restaurant_id=restaurant.id) }}>Edit</a>
+                <a class="btn btn-danger" href={{ url_for("restaurant.delete", restaurant_id=restaurant.id) }}>Delete</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+

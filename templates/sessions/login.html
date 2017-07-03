@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+    {% block scripts %}
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script> var state = '{{ oauth_state }}' </script>
+        <script src="https://apis.google.com/js/client:platform.js"></script>
+        <script src="/static/script/log_in_scripts.js?{{ version }}" type="application/javascript"></script>
+    {% endblock %}
+
+{% block nav %}
+    {% include 'restricted_heading.html' %}
+{% endblock %}
+
+{% block content %}
+  <button class="btn btn-success" id="signInButton">Sign With Google</button>
+{% endblock %}

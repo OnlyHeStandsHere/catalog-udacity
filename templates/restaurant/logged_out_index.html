@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block nav %}
+    {% include 'restricted_heading.html' %}
+{% endblock %}
+
+{% block content %}
+    {% for restaurant in restaurants %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>{{ restaurant.name }}</h3>
+            </div>
+            <div class="panel-body">
+                <a class="btn btn-primary" href={{ url_for("restaurant.show_menu", restaurant_id=restaurant.id) }}>Menu</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+

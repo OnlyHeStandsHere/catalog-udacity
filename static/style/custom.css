@@ -1,0 +1,28 @@
+.headline{
+    text-align: center;
+    margin: 3%;
+}
+
+.heading-img{
+    background-size: cover;
+}
+
+.center{
+    text-align: center;
+}
+
+.centered_container{
+    margin: auto;
+    max-width: 1200px;
+}
+
+nav{
+    margin-top: 10px;
+}
+
+.panel > .panel-heading {
+    background-image: none;
+    background-color:#36454f;
+    color: white;
+
+}

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block nav %}
+    {% include 'restricted_heading.html' %}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ restaurant.name }} Menu</h1>
+    {% for item in restaurant.menu_items %}
+        <h4>{{ item.name }}</h4>
+        <div>{{ item.desc }}</div>
+        <div>{{ item.price }}</div>
+    {% endfor %}
+{% endblock %}
