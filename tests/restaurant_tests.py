@@ -24,12 +24,14 @@ post_urls=[
 ]
 
 # a user to test user creation via json
-params = {
+new_user_params = {
     'username': "wolf_man_jon",
     'password': 'password123',
     'email': "wolf_man@example.com"
 }
 
+# a common json header for a post request
+header = {"Content-Type": 'application/json'}
 
 # Test 1. Check that all URLS respond to GET Request that do not require a login
 print("Test 1: Checking GET Requests for URLs that do not require a log in")
@@ -43,3 +45,11 @@ for url in get_urls:
 
 # Test 2. Create a user via json request. This is to test the json api
 print("Test 2: Creating a user via json request to /users")
+r = requests.post(url=new_user_url,
+                  headers=header,
+                  json=new_user_params)
+
+if r.ok:
+    print("PASS: New User {} Created".format(new_user_params.get('username')))
+else:
+    print("FAIL: Did not create a new user")
