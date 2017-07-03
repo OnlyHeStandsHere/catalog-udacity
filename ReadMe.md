@@ -49,5 +49,26 @@ if this is not configured, then log in with google will not work
 
 An sqlite database in included in the repo so no further action needs to be taken.
 
+## Test User
+
+There is a test user in the database that can be used for making api requests
+
+username : wolf_man_jon \
+password: password123
+
+## API URLs
+
+To create a new user submit a post request to
+
+    http://localhost:5000/users
+    
+This route expects paramaters 
+
+    username, password
+
+A request for an API token can then be made to
+
+    http://localhost:5000/restaurants/token
+
 
     
