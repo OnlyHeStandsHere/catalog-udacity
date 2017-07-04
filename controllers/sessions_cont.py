@@ -64,7 +64,7 @@ def google_login():
         print(login_session['token'])
 
         # now make a request for the username
-        url = " https://www.googleapis.com/oauth2/v1/userinfo"
+        url = "https://www.googleapis.com/oauth2/v1/userinfo"
         params = {"access_token": credentials.access_token, 'alt': 'json'}
         r = requests.get(url, params=params)
 
