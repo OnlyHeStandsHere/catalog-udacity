@@ -38,10 +38,10 @@ def create(restaurant_id):
 # as the id's are in plain views
 @menu_items.route("/restaurant/<int:restaurant_id>/menu/<int:menu_item_id>/edit", methods=['GET', 'POST'])
 def update(restaurant_id, menu_item_id):
-    restaurant = Restaurant.query.get(restaurant_id)
-    menu_item = MenuItem.query.get(menu_item_id)
     user_id = login_session.get('id')
     if user_id:
+        restaurant = Restaurant.query.get(restaurant_id)
+        menu_item = MenuItem.query.get(menu_item_id)
         if menu_item:
             if request.method == 'GET':
                 return render_template("menu/form.html", menu_item=menu_item, restaurant=restaurant)
@@ -70,10 +70,10 @@ def update(restaurant_id, menu_item_id):
 # this prevents users messing with the url and trying random requests.
 @menu_items.route("/restaurant/<int:restaurant_id>/menu/<int:menu_item_id>/delete", methods=['GET', 'POST'])
 def delete(restaurant_id, menu_item_id):
-    restaurant = Restaurant.query.get(restaurant_id)
-    menu_item = MenuItem.query.get(menu_item_id)
     user_id = login_session.get('id')
     if user_id:
+        restaurant = Restaurant.query.get(restaurant_id)
+        menu_item = MenuItem.query.get(menu_item_id)
         if menu_item:
             if request.method == "GET":
                 return render_template("menu/delete.html", menu_item=menu_item)

@@ -51,8 +51,8 @@ def create():
 @restaurant.route("/restaurant/<int:restaurant_id>/edit/", methods=['GET', 'POST'])
 def update(restaurant_id):
     user_id = login_session.get('id')
-    current_restaurant = Restaurant.query.get(restaurant_id)
     if user_id:
+        current_restaurant = Restaurant.query.get(restaurant_id)
         if current_restaurant:
             if request.method == "GET":
                 return render_template("restaurant/form.html", restaurant=current_restaurant)
@@ -79,9 +79,9 @@ def update(restaurant_id):
 # only allow the delete if a user is logged in
 @restaurant.route("/restaurant/<int:restaurant_id>/delete/", methods=['GET', 'POST'])
 def delete(restaurant_id):
-    current_restaurant = Restaurant.query.get(restaurant_id)
     user_id = login_session.get('id')
     if user_id:
+        current_restaurant = Restaurant.query.get(restaurant_id)
         if current_restaurant:
             if request.method == "GET":
                 return render_template("restaurant/delete.html", restaurant=current_restaurant)

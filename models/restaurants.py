@@ -5,7 +5,7 @@ class Restaurant(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
-    menu_items = db.relationship("MenuItem", backref="restaurant")
+    menu_items = db.relationship("MenuItem", backref="restaurant", cascade='all, delete-orphan')
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
 
     def serialize_menu_items(self):
