@@ -53,3 +53,5 @@ if r.ok:
     print("PASS: New User {} Created".format(new_user_params.get('username')))
 else:
     print("FAIL: Did not create a new user")
+
+     
