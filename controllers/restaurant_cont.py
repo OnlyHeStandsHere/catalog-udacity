@@ -6,6 +6,12 @@ from flask import session as login_session
 restaurant = Blueprint('restaurant', __name__)
 
 
+def validate_owner(user_id, restaurant):
+    if user_id == restaurant.user_id:
+        return True
+    else:
+        return False
+
 # index to display all restaurants
 # only dispaly the CRUD version of the webpage if users are logged in
 # otherwise we serve a read only version of the page
@@ -54,19 +60,23 @@ def update(restaurant_id):
     if user_id:
         current_restaurant = Restaurant.query.get(restaurant_id)
         if current_restaurant:
-            if request.method == "GET":
-                return render_template("restaurant/form.html", restaurant=current_restaurant)
-            elif request.method == "POST":
-                name = request.form.get("restaurant_name")
-                if name:
-                    current_restaurant.name = name
-                    db.session.add(current_restaurant)
-                    db.session.commit()
-                    flash("Restaurant has been updated to {}".format(current_restaurant.name))
-                    return redirect(url_for('restaurant.index'))
+            if validate_owner(user_id, current_restaurant):
+                if request.method == "GET":
+                    return render_template("restaurant/form.html", restaurant=current_restaurant)
+                elif request.method == "POST":
+                    name = request.form.get("restaurant_name")
+                    if name:
+                        current_restaurant.name = name
+                        db.session.add(current_restaurant)
+                        db.session.commit()
+                        flash("Restaurant has been updated to {}".format(current_restaurant.name))
+                        return redirect(url_for('restaurant.index'))
+                else:
+                    flash("Invalid Request, please try again")
+                    return render_template("restaurant/form.html", restaurant='')
             else:
-                flash("Invalid Request, please try again")
-                return render_template("restaurant/form.html", restaurant='')
+                flash("you can not edit this restaurant as you are not the owner")
+                return redirect(url_for('restaurant.index'))
         else:
             flash("The restaurant could not be found. Please try again")
             return render_template("restaurant/form.html", restaurant='')
@@ -83,16 +93,20 @@ def delete(restaurant_id):
     if user_id:
         current_restaurant = Restaurant.query.get(restaurant_id)
         if current_restaurant:
-            if request.method == "GET":
-                return render_template("restaurant/delete.html", restaurant=current_restaurant)
-            elif request.method == 'POST':
-                db.session.delete(current_restaurant)
-                db.session.commit()
-                flash("Restaurant Deleted Successfully!")
-                return redirect(url_for("restaurant.index"))
+            if validate_owner(user_id, current_restaurant):
+                if request.method == "GET":
+                    return render_template("restaurant/delete.html", restaurant=current_restaurant)
+                elif request.method == 'POST':
+                    db.session.delete(current_restaurant)
+                    db.session.commit()
+                    flash("Restaurant Deleted Successfully!")
+                    return redirect(url_for("restaurant.index"))
+                else:
+                    flash("Invalid Request, please try again")
+                    return render_template("restaurant/delete.html", restaurant='')
             else:
-                flash("Invalid Request, please try again")
-                return render_template("restaurant/delete.html", restaurant='')
+                flash("you can not delete this restaurant as you are not the owner")
+                return redirect(url_for('restaurant.index'))
         else:
             flash("Restaurant not found, please try again")
             return render_template("restaurant/delete.html", restaurant='')
