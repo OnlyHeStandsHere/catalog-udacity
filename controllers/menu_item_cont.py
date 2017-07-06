@@ -1,5 +1,6 @@
 from flask import Blueprint, flash, render_template, url_for, request, redirect
 from models.menu_items import MenuItem, Restaurant, db
+from models.users import User
 from flask import session as login_session
 from controllers.restaurant_cont import validate_owner
 
@@ -8,7 +9,8 @@ menu_items = Blueprint("menu_item", __name__)
 
 
 def validate_menu_owner(user_id, menu_item):
-    if user_id == menu_item.restaurant.user_id:
+    user = User.query.filter_by(google_id=user_id).first()
+    if user.id == menu_item.restaurant.user_id:
         return True
     else:
         return False

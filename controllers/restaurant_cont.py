@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, url_for, redirect, request, flash
 from models.restaurants import Restaurant, db
+from  models.users import User
 from flask import session as login_session
 
 # make a restaurant blueprint
@@ -7,7 +8,8 @@ restaurant = Blueprint('restaurant', __name__)
 
 
 def validate_owner(user_id, restaurant):
-    if user_id == restaurant.user_id:
+    user = User.query.filter_by(google_id=user_id).first()
+    if user.id == restaurant.user_id:
         return True
     else:
         return False
@@ -31,13 +33,14 @@ def index():
 @restaurant.route("/restaurant/new/", methods=['GET', 'POST'])
 def create():
     user_id = login_session.get('id')
+    user = User.query.filter_by(google_id=user_id).first()
     if user_id:
         if request.method == 'GET':
             return render_template("restaurant/form.html", restaurant='')
         elif request.method == 'POST':
             rest_name = request.form.get("restaurant_name")
             if rest_name:
-                new_restaurant = Restaurant(name=rest_name, user_id=login_session.get('id'))
+                new_restaurant = Restaurant(name=rest_name, user_id=user.id)
                 db.session.add(new_restaurant)
                 db.session.commit()
                 return redirect(url_for("restaurant.index"))
